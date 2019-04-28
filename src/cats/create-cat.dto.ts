@@ -4,13 +4,13 @@ import { ApiModelProperty } from '@nestjs/swagger';
 export class CreateCatDto {
   @IsString()
   @ApiModelProperty()
-  readonly name: string;
+  name: string;
 
   @IsInt()
   @ApiModelProperty()
-  readonly age: number;
+  age: number;
 
   @IsString()
   @ApiModelProperty()
-  readonly bread: string;
+  bread: string;
 }

@@ -7,35 +7,29 @@ import {
   Header,
   Param,
   Body,
-  Query,
-  UseInterceptors,
-  UseGuards,
   UsePipes,
   ValidationPipe,
   Inject,
-  UnauthorizedException,
+  Optional,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { CreateCatDto } from './create-cat.dto';
 import { CatsService } from './cat.service';
-import { ConfigService } from './../common/config/config.service';
 import { Logger } from 'winston';
+import { ConfigService } from './../common/config/config.service';
 import { AuthService } from './../common/auth/auth.service';
-import { AuthPayloadDto } from './../common/auth/dto/auth.payload.dto';
-
 @Controller('Cats')
 export class CatsController {
   constructor(
     private readonly catsService: CatsService,
     private readonly configService: ConfigService,
     private readonly authService: AuthService,
-    @Inject('winston') private readonly logger: Logger,
+    @Optional() @Inject('winston') private readonly logger: Logger,
   ) {}
 
   @Get()
-  async findAll(@Query() query: any) {
-    this.logger.log('info', 'find all cats');
-    return { name: 'sb', env: this.configService.get('cats.name') };
+  async findAll() {
+    return this.catsService.findAll();
   }
 
   @Post()

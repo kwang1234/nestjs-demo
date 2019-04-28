@@ -1,18 +1,17 @@
 import { Module } from '@nestjs/common';
 import { CatsModule } from './cats/cats.module';
 import { TerminusModule } from '@nestjs/terminus';
-import { AppService } from './app.service';
 import * as winston from 'winston';
 import { WinstonModule } from 'nest-winston';
 import { AuthModule } from './common/auth/auth.module';
-import { AppController } from './app.controller';
+import { TerminusOptionsService } from './common/terminus-options.service';
 
 @Module({
   imports: [
     CatsModule,
     AuthModule,
     TerminusModule.forRootAsync({
-      useClass: AppService,
+      useClass: TerminusOptionsService,
     }),
     WinstonModule.forRoot({
       level: 'info',
